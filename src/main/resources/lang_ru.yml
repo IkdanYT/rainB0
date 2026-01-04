@@ -7,28 +7,28 @@ messages:
   player-not-found: "§cИгрок %player% не найден!"
 
   # ── Команда status ──
-  status-header: "§6§l=== RainB0 Статус ==="
+  status-header: "§6§l=== WeatherFX Статус ==="
   status-enabled: "§7Статус: %status%"
   status-players: "§7Игроков под эффектом: §f%affected%§7/§f%online%"
   status-worlds: "§7Активные миры: §f%worlds%"
 
   # ── Команда toggle ──
-  toggle-enabled: "§aЭффект дождя включён для вас!"
-  toggle-disabled: "§cЭффект дождя отключён для вас!"
-  toggle-player-enabled: "§aЭффект дождя включён для %player%!"
-  toggle-player-disabled: "§cЭффект дождя отключён для %player%!"
+  toggle-enabled: "§aЭффект погоды включён для вас!"
+  toggle-disabled: "§cЭффект погоды отключён для вас!"
+  toggle-player-enabled: "§aЭффект погоды включён для %player%!"
+  toggle-player-disabled: "§cЭффект погоды отключён для %player%!"
 
   # ── Команда info ──
-  info-header: "§6§l=== RainB0 Инфо ==="
+  info-header: "§6§l=== WeatherFX Инфо ==="
   info-version: "§7Версия: §f%version%"
   info-author: "§7Автор: §f%author%"
   info-website: "§7Сайт: §f%website%"
 
   # ── Команда help ──
-  help-header: "§6§l=== RainB0 Команды ==="
+  help-header: "§6§l=== WeatherFX Команды ==="
   help-reload: "Перезагрузить конфигурацию"
   help-status: "Статус плагина"
-  help-toggle: "Переключить эффект дождя"
+  help-toggle: "Переключить эффект погоды"
   help-info: "Информация о плагине"
 
   # ── Уведомления об эффектах погоды ──

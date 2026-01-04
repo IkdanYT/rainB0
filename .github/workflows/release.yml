@@ -32,19 +32,22 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
-        files: target/rainb0-*.jar
+        files: target/WeatherFX-*.jar
         generate_release_notes: true
-        name: RainB0 v${{ steps.get_version.outputs.VERSION }}
+        name: WeatherFX v${{ steps.get_version.outputs.VERSION }}
         body: |
-          ## RainB0 v${{ steps.get_version.outputs.VERSION }}
+          ## ⛈️ WeatherFX v${{ steps.get_version.outputs.VERSION }}
           
           Realistic weather effects for Minecraft servers.
           
-          ### Installation
-          1. Download `rainb0-${{ steps.get_version.outputs.VERSION }}.jar`
+          ### 📥 Installation
+          1. Download `WeatherFX-${{ steps.get_version.outputs.VERSION }}.jar`
           2. Place it in your server's `plugins` folder
           3. Restart the server
           
-          ### Requirements
+          ### 📋 Requirements
           - Paper/Spigot 1.18+
           - Java 17+
+          
+          ---
+          *Based on RainB0 by b0b0b0*

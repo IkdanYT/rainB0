@@ -7,28 +7,28 @@ messages:
   player-not-found: "§cPlayer %player% not found!"
 
   # ── Status command ──
-  status-header: "§6§l=== RainB0 Status ==="
+  status-header: "§6§l=== WeatherFX Status ==="
   status-enabled: "§7Status: %status%"
   status-players: "§7Players affected: §f%affected%§7/§f%online%"
   status-worlds: "§7Enabled worlds: §f%worlds%"
 
   # ── Toggle command ──
-  toggle-enabled: "§aRain effect enabled for you!"
-  toggle-disabled: "§cRain effect disabled for you!"
-  toggle-player-enabled: "§aRain effect enabled for %player%!"
-  toggle-player-disabled: "§cRain effect disabled for %player%!"
+  toggle-enabled: "§aWeather effect enabled for you!"
+  toggle-disabled: "§cWeather effect disabled for you!"
+  toggle-player-enabled: "§aWeather effect enabled for %player%!"
+  toggle-player-disabled: "§cWeather effect disabled for %player%!"
 
   # ── Info command ──
-  info-header: "§6§l=== RainB0 Info ==="
+  info-header: "§6§l=== WeatherFX Info ==="
   info-version: "§7Version: §f%version%"
   info-author: "§7Author: §f%author%"
   info-website: "§7Website: §f%website%"
 
   # ── Help command ──
-  help-header: "§6§l=== RainB0 Commands ==="
+  help-header: "§6§l=== WeatherFX Commands ==="
   help-reload: "Reload configuration"
   help-status: "View plugin status"
-  help-toggle: "Toggle rain effect"
+  help-toggle: "Toggle weather effect"
   help-info: "Plugin information"
 
   # ── Weather effect notifications ──

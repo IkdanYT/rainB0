@@ -27,6 +27,6 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: RainB0
-        path: target/rainb0-*.jar
+        name: WeatherFX
+        path: target/WeatherFX-*.jar
         retention-days: 7

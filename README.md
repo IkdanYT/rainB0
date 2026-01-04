@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://img.shields.io/github/v/release/IkdanYT/rainB0?style=for-the-badge&color=blue" alt="Release">
-  <img src="https://img.shields.io/github/downloads/IkdanYT/rainB0/total?style=for-the-badge&color=green" alt="Downloads">
+  <img src="https://img.shields.io/github/v/release/IkdanYT/WeatherFX?style=for-the-badge&color=blue" alt="Release">
+  <img src="https://img.shields.io/github/downloads/IkdanYT/WeatherFX/total?style=for-the-badge&color=green" alt="Downloads">
   <img src="https://img.shields.io/badge/Minecraft-1.18--1.21-orange?style=for-the-badge" alt="Minecraft">
   <img src="https://img.shields.io/badge/Java-17+-red?style=for-the-badge" alt="Java">
 </p>
 
-<h1 align="center">🌧️ RainB0</h1>
+<h1 align="center">⛈️ WeatherFX</h1>
 
 <p align="center">
   <b>Реалистичные эффекты погоды для Minecraft серверов</b><br>
@@ -22,11 +22,20 @@
 
 ---
 
-## 📖 Description | Описание
+## 📖 About | О плагине
 
-**RainB0** добавляет реалистичные эффекты погоды на ваш сервер. Игроки получают замедление под дождём, не могут летать на элитрах в плохую погоду, слышат звуки дождя и получают уведомления об изменении погоды.
+**WeatherFX** — это переработанная и улучшенная версия плагина [RainB0](https://black-minecraft.com/resources/rainb0.10054/) от **b0b0b0**.
 
-**RainB0** adds realistic weather effects to your server. Players get slowness in rain, can't fly with elytra in bad weather, hear rain sounds, and receive weather notifications.
+**WeatherFX** is a reworked and enhanced version of [RainB0](https://black-minecraft.com/resources/rainb0.10054/) plugin by **b0b0b0**.
+
+### ✨ Что нового | What's New
+
+- 🪂 Ограничения для элитр в плохую погоду
+- 🔊 Атмосферные звуки дождя
+- 💬 Уведомления с кулдауном
+- ❄️ Отдельные эффекты для снега
+- ⚡ Усиленные эффекты грозы
+- 🔧 Полностью переработанная конфигурация
 
 ---
 
@@ -55,10 +64,10 @@
 
 ### Steps | Шаги
 
-1. Download the latest release from [Releases](https://github.com/IkdanYT/rainB0/releases)
-2. Place `rainb0-X.X.jar` in your server's `plugins` folder
+1. Download the latest release from [Releases](https://github.com/IkdanYT/WeatherFX/releases)
+2. Place `WeatherFX-X.X.jar` in your server's `plugins` folder
 3. Restart the server
-4. Configure in `plugins/RainB0/config.yml`
+4. Configure in `plugins/WeatherFX/config.yml`
 
 ---
 
@@ -66,13 +75,13 @@
 
 | Command | Description | Permission |
 |---------|-------------|------------|
-| `/rainb0 reload` | Reload configuration | `rainb0.reload` |
-| `/rainb0 status` | View plugin status | `rainb0.status` |
-| `/rainb0 toggle` | Toggle effect for yourself | `rainb0.toggle` |
-| `/rainb0 toggle <player>` | Toggle effect for another player | `rainb0.toggle.others` |
-| `/rainb0 info` | Plugin information | - |
+| `/wfx reload` | Reload configuration | `wfx.reload` |
+| `/wfx status` | View plugin status | `wfx.status` |
+| `/wfx toggle` | Toggle effect for yourself | `wfx.toggle` |
+| `/wfx toggle <player>` | Toggle effect for another player | `wfx.toggle.others` |
+| `/wfx info` | Plugin information | - |
 
-**Aliases:** `/rb0`, `/rain`
+**Aliases:** `/weatherfx`, `/rain`
 
 ---
 
@@ -80,12 +89,12 @@
 
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `rainb0.reload` | Reload configuration | OP |
-| `rainb0.status` | View plugin status | OP |
-| `rainb0.toggle` | Toggle effect for yourself | Everyone |
-| `rainb0.toggle.others` | Toggle effect for other players | OP |
-| `rainb0.bypass` | Bypass all weather effects | Nobody |
-| `rainb0.elytra.bypass` | Bypass elytra restrictions | Nobody |
+| `wfx.reload` | Reload configuration | OP |
+| `wfx.status` | View plugin status | OP |
+| `wfx.toggle` | Toggle effect for yourself | Everyone |
+| `wfx.toggle.others` | Toggle effect for other players | OP |
+| `wfx.bypass` | Bypass all weather effects | Nobody |
+| `wfx.elytra.bypass` | Bypass elytra restrictions | Nobody |
 
 ---
 
@@ -96,7 +105,7 @@
 
 ```yaml
 # ╔═══════════════════════════════════════════════════════════════╗
-# ║                      RainB0 Configuration                     ║
+# ║                    WeatherFX Configuration                    ║
 # ╚═══════════════════════════════════════════════════════════════╝
 
 # Language: en, ru
@@ -265,18 +274,33 @@ effects:
 
 ## 🔗 Links | Ссылки
 
-- 📦 **Download:** [GitHub Releases](https://github.com/IkdanYT/rainB0/releases)
+### WeatherFX (This Fork)
+- 📦 **Download:** [GitHub Releases](https://github.com/IkdanYT/WeatherFX/releases)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/IkdanYT/WeatherFX/issues)
+- 👤 **Author:** [IkdanYT](https://github.com/IkdanYT)
+
+### Original RainB0
 - 🌐 **Website:** [black-minecraft.com](https://black-minecraft.com/resources/rainb0.10054/)
-- 🐛 **Issues:** [GitHub Issues](https://github.com/IkdanYT/rainB0/issues)
+- 👤 **Author:** b0b0b0
+
+---
+
+## 👥 Credits | Авторы
+
+| Role | Author |
+|------|--------|
+| **Original Plugin** | [b0b0b0](https://black-minecraft.com/members/b0b0b0.14914/) — RainB0 |
+| **Fork & Improvements** | [IkdanYT](https://github.com/IkdanYT) — WeatherFX |
 
 ---
 
 ## 📜 License
 
-This project is open source. Feel free to use and modify.
+This project is open source. Based on RainB0 by b0b0b0.
 
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/IkdanYT">b0b0b0</a>
+  Made with ❤️ by <a href="https://github.com/IkdanYT">IkdanYT</a><br>
+  <sub>Based on RainB0 by b0b0b0</sub>
 </p>

@@ -73,7 +73,7 @@ public class ElytraHandler implements Listener {
             return false;
         }
 
-        if (player.hasPermission("rainb0.elytra.bypass")) {
+        if (player.hasPermission("wfx.elytra.bypass")) {
             return false;
         }
 

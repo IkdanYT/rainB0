@@ -62,7 +62,7 @@ public class RainEffectManager implements Listener {
     private void processPlayer(Player player) {
         UUID playerId = player.getUniqueId();
 
-        if (player.hasPermission("rainb0.bypass") || disabledPlayers.contains(playerId)) {
+        if (player.hasPermission("wfx.bypass") || disabledPlayers.contains(playerId)) {
             removeEffects(player);
             return;
         }

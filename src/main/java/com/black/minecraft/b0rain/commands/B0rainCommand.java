@@ -52,7 +52,7 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
     }
 
     private boolean handleReload(CommandSender sender) {
-        if (!sender.hasPermission("rainb0.reload")) {
+        if (!sender.hasPermission("wfx.reload")) {
             sender.sendMessage(languageManager.getMessage("no-permission"));
             return true;
         }
@@ -72,7 +72,7 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
     }
 
     private boolean handleStatus(CommandSender sender) {
-        if (!sender.hasPermission("rainb0.status")) {
+        if (!sender.hasPermission("wfx.status")) {
             sender.sendMessage(languageManager.getMessage("no-permission"));
             return true;
         }
@@ -95,7 +95,7 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
         Player target;
 
         if (args.length >= 2) {
-            if (!sender.hasPermission("rainb0.toggle.others")) {
+            if (!sender.hasPermission("wfx.toggle.others")) {
                 sender.sendMessage(languageManager.getMessage("no-permission"));
                 return true;
             }
@@ -106,7 +106,7 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
         } else {
-            if (!sender.hasPermission("rainb0.toggle")) {
+            if (!sender.hasPermission("wfx.toggle")) {
                 sender.sendMessage(languageManager.getMessage("no-permission"));
                 return true;
             }
@@ -151,10 +151,10 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
 
     private void sendHelp(CommandSender sender) {
         sender.sendMessage(languageManager.getMessage("help-header"));
-        sender.sendMessage("§7/rainb0 reload §8- §f" + languageManager.getMessage("help-reload"));
-        sender.sendMessage("§7/rainb0 status §8- §f" + languageManager.getMessage("help-status"));
-        sender.sendMessage("§7/rainb0 toggle [player] §8- §f" + languageManager.getMessage("help-toggle"));
-        sender.sendMessage("§7/rainb0 info §8- §f" + languageManager.getMessage("help-info"));
+        sender.sendMessage("§7/wfx reload §8- §f" + languageManager.getMessage("help-reload"));
+        sender.sendMessage("§7/wfx status §8- §f" + languageManager.getMessage("help-status"));
+        sender.sendMessage("§7/wfx toggle [player] §8- §f" + languageManager.getMessage("help-toggle"));
+        sender.sendMessage("§7/wfx info §8- §f" + languageManager.getMessage("help-info"));
     }
 
     @Override
@@ -165,15 +165,15 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
             String input = args[0].toLowerCase();
             for (String cmd : COMMANDS) {
                 if (cmd.startsWith(input)) {
-                    if (cmd.equals("reload") && !sender.hasPermission("rainb0.reload")) continue;
-                    if (cmd.equals("status") && !sender.hasPermission("rainb0.status")) continue;
-                    if (cmd.equals("toggle") && !sender.hasPermission("rainb0.toggle") 
-                            && !sender.hasPermission("rainb0.toggle.others")) continue;
+                    if (cmd.equals("reload") && !sender.hasPermission("wfx.reload")) continue;
+                    if (cmd.equals("status") && !sender.hasPermission("wfx.status")) continue;
+                    if (cmd.equals("toggle") && !sender.hasPermission("wfx.toggle") 
+                            && !sender.hasPermission("wfx.toggle.others")) continue;
                     completions.add(cmd);
                 }
             }
         } else if (args.length == 2 && args[0].equalsIgnoreCase("toggle")) {
-            if (sender.hasPermission("rainb0.toggle.others")) {
+            if (sender.hasPermission("wfx.toggle.others")) {
                 String input = args[1].toLowerCase();
                 completions = Bukkit.getOnlinePlayers().stream()
                         .map(Player::getName)

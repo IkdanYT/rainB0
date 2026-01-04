@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class B0rain extends JavaPlugin {
-    public static final String PREFIX = "\u001B[37m[\u001B[90mRainB0\u001B[37m]\u001B[0m ";
+    public static final String PREFIX = "\u001B[37m[\u001B[96mWeatherFX\u001B[37m]\u001B[0m ";
 
     private ConfigManager configManager;
     private LanguageManager languageManager;
@@ -31,8 +31,8 @@ public final class B0rain extends JavaPlugin {
         elytraHandler = new ElytraHandler(this, configManager, notificationManager, soundManager);
 
         B0rainCommand commandHandler = new B0rainCommand(this, configManager, languageManager);
-        getCommand("rainb0").setExecutor(commandHandler);
-        getCommand("rainb0").setTabCompleter(commandHandler);
+        getCommand("wfx").setExecutor(commandHandler);
+        getCommand("wfx").setTabCompleter(commandHandler);
 
         Bukkit.getPluginManager().registerEvents(elytraHandler, this);
         rainEffectManager.start();

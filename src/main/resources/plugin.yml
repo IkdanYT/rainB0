@@ -1,33 +1,33 @@
-name: RainB0
+name: WeatherFX
 version: '${project.version}'
 main: com.black.minecraft.b0rain.B0rain
 api-version: '1.18'
-authors: [ b0b0b0 ]
-website: https://black-minecraft.com/
-description: Realistic weather effects - slowness in rain, elytra restrictions, and more!
+authors: [ IkdanYT ]
+website: https://github.com/IkdanYT/WeatherFX
+description: Realistic weather effects - slowness in rain, elytra restrictions, ambient sounds and more!
 
 commands:
-  rainb0:
-    description: Main command for RainB0 plugin
+  wfx:
+    description: Main command for WeatherFX plugin
     usage: /<command> <reload|status|toggle|info>
-    aliases: [rb0, rain]
+    aliases: [weatherfx, rain]
 
 permissions:
-  rainb0.reload:
-    description: Allows reloading RainB0 configuration
+  wfx.reload:
+    description: Allows reloading WeatherFX configuration
     default: op
-  rainb0.bypass:
-    description: Bypass all rain slowness effects
+  wfx.bypass:
+    description: Bypass all weather effects
     default: false
-  rainb0.elytra.bypass:
-    description: Bypass elytra flight restrictions in rain
+  wfx.elytra.bypass:
+    description: Bypass elytra flight restrictions in bad weather
     default: false
-  rainb0.status:
+  wfx.status:
     description: View plugin status
     default: op
-  rainb0.toggle:
-    description: Toggle rain effect for yourself
+  wfx.toggle:
+    description: Toggle weather effect for yourself
     default: true
-  rainb0.toggle.others:
-    description: Toggle rain effect for other players
+  wfx.toggle.others:
+    description: Toggle weather effect for other players
     default: op
