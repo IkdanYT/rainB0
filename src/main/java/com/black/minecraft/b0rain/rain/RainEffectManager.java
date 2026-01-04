@@ -11,7 +11,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,28 +21,14 @@ public class RainEffectManager implements Listener {
     private final B0rain plugin;
     private final ConfigManager configManager;
     private BukkitRunnable task;
-    private final Set<UUID> playersWithPluginEffect;
     private final Set<UUID> disabledPlayers;
-    private PotionEffectType slownessType;
-    private PotionEffect slownessEffect;
+    private final Map<UUID, PotionEffectType> activeEffects;
 
     public RainEffectManager(B0rain plugin, ConfigManager configManager) {
         this.plugin = plugin;
         this.configManager = configManager;
-        this.playersWithPluginEffect = new HashSet<>();
         this.disabledPlayers = new HashSet<>();
-        initEffects();
-    }
-
-    private void initEffects() {
-        this.slownessType = PotionEffectHelper.getSlownessType();
-        this.slownessEffect = PotionEffectHelper.createSlownessEffect(
-                configManager.getSlownessDurationTicks(),
-                configManager.getSlownessLevel()
-        );
-        if (slownessType == null) {
-            plugin.getLogger().severe("Failed to load SLOWNESS potion effect type!");
-        }
+        this.activeEffects = new HashMap<>();
     }
 
     public void start() {
@@ -48,52 +36,60 @@ public class RainEffectManager implements Listener {
             task.cancel();
         }
 
-        initEffects();
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
         task = new BukkitRunnable() {
             @Override
             public void run() {
-                if (slownessType == null || slownessEffect == null) {
-                    return;
-                }
-
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!configManager.isWorldEnabled(player.getWorld().getName())) {
-                        continue;
-                    }
-
-                    UUID playerId = player.getUniqueId();
-
-                    if (player.hasPermission("rainb0.bypass") || disabledPlayers.contains(playerId)) {
-                        if (playersWithPluginEffect.contains(playerId)) {
-                            player.removePotionEffect(slownessType);
-                            playersWithPluginEffect.remove(playerId);
-                        }
-                        continue;
-                    }
-
-                    boolean inRain = RainChecker.isInRain(
-                            player,
-                            configManager.isCheckThunder(),
-                            configManager.isCheckSnow(),
-                            configManager.getIgnoredBiomes()
-                    );
-
-                    if (inRain) {
-                        player.addPotionEffect(slownessEffect);
-                        playersWithPluginEffect.add(playerId);
-                    } else {
-                        if (playersWithPluginEffect.contains(playerId)) {
-                            player.removePotionEffect(slownessType);
-                            playersWithPluginEffect.remove(playerId);
-                        }
-                    }
+                    processPlayer(player);
                 }
             }
         };
 
         task.runTaskTimer(plugin, 0L, configManager.getCheckIntervalTicks());
+    }
+
+    private void processPlayer(Player player) {
+        UUID playerId = player.getUniqueId();
+
+        if (player.hasPermission("rainb0.bypass") || disabledPlayers.contains(playerId)) {
+            removeEffect(player);
+            return;
+        }
+
+        if (!RainChecker.shouldApplyEffect(player, configManager)) {
+            removeEffect(player);
+            return;
+        }
+
+        WeatherType weather = RainChecker.getWeatherType(player, configManager);
+        PotionEffect effect = getEffectForWeather(weather);
+
+        if (effect == null) {
+            removeEffect(player);
+            return;
+        }
+
+        player.addPotionEffect(effect);
+        activeEffects.put(playerId, effect.getType());
+    }
+
+    private PotionEffect getEffectForWeather(WeatherType weather) {
+        return switch (weather) {
+            case RAIN -> configManager.getRainEffect();
+            case THUNDER -> configManager.getThunderEffect();
+            case SNOW -> configManager.getSnowEffect();
+            default -> null;
+        };
+    }
+
+    private void removeEffect(Player player) {
+        UUID playerId = player.getUniqueId();
+        PotionEffectType type = activeEffects.remove(playerId);
+        if (type != null) {
+            player.removePotionEffect(type);
+        }
     }
 
     public void stop() {
@@ -102,21 +98,19 @@ public class RainEffectManager implements Listener {
             task = null;
         }
 
-        if (slownessType != null) {
-            for (UUID playerId : new HashSet<>(playersWithPluginEffect)) {
-                Player player = Bukkit.getPlayer(playerId);
-                if (player != null) {
-                    player.removePotionEffect(slownessType);
-                }
+        for (UUID playerId : new HashSet<>(activeEffects.keySet())) {
+            Player player = Bukkit.getPlayer(playerId);
+            if (player != null) {
+                removeEffect(player);
             }
-            playersWithPluginEffect.clear();
         }
+        activeEffects.clear();
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         UUID playerId = event.getPlayer().getUniqueId();
-        playersWithPluginEffect.remove(playerId);
+        activeEffects.remove(playerId);
         disabledPlayers.remove(playerId);
     }
 
@@ -127,9 +121,8 @@ public class RainEffectManager implements Listener {
         } else {
             disabledPlayers.add(playerId);
             Player player = Bukkit.getPlayer(playerId);
-            if (player != null && slownessType != null && playersWithPluginEffect.contains(playerId)) {
-                player.removePotionEffect(slownessType);
-                playersWithPluginEffect.remove(playerId);
+            if (player != null) {
+                removeEffect(player);
             }
             return false;
         }
@@ -140,10 +133,10 @@ public class RainEffectManager implements Listener {
     }
 
     public int getAffectedCount() {
-        return playersWithPluginEffect.size();
+        return activeEffects.size();
     }
 
     public Set<UUID> getAffectedPlayers() {
-        return new HashSet<>(playersWithPluginEffect);
+        return new HashSet<>(activeEffects.keySet());
     }
 }

@@ -1,11 +1,10 @@
 package com.black.minecraft.b0rain.rain;
 
+import com.black.minecraft.b0rain.config.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
-import java.util.List;
 import java.util.Set;
 
 public class RainChecker {
@@ -23,33 +22,48 @@ public class RainChecker {
             "minecraft:ice_spikes"
     );
 
-    public static boolean isInRain(Player player, boolean checkThunder, boolean checkSnow, List<String> ignoredBiomes) {
-        if (player.isInsideVehicle() || player.isDead() || player.isInWater()) {
-            return false;
-        }
+    public static boolean shouldApplyEffect(Player player, ConfigManager config) {
+        if (player.isDead()) return false;
+        if (config.isIgnoreInVehicle() && player.isInsideVehicle()) return false;
+        if (config.isIgnoreFlying() && player.isFlying()) return false;
+        if (config.isIgnoreInWater() && player.isInWater()) return false;
+        if (config.getIgnoredGamemodes().contains(player.getGameMode())) return false;
+        if (!config.isWorldAllowed(player.getWorld().getName())) return false;
 
+        String biome = player.getLocation().getBlock().getBiome().getKey().toString();
+        if (!config.isBiomeAllowed(biome)) return false;
+
+        return isUnderOpenSky(player);
+    }
+
+    public static WeatherType getWeatherType(Player player, ConfigManager config) {
         World world = player.getWorld();
-        if (!world.hasStorm() && !(checkThunder && world.isThundering())) {
-            return false;
+        if (!world.hasStorm() && !world.isThundering()) {
+            return WeatherType.NONE;
         }
 
-        Location location = player.getLocation();
-        String biomeName = location.getBlock().getBiome().getKey().toString();
+        String biome = player.getLocation().getBlock().getBiome().getKey().toString();
 
-        if (ignoredBiomes != null && ignoredBiomes.contains(biomeName)) {
-            return false;
+        if (world.isThundering() && config.isThunderEnabled()) {
+            return WeatherType.THUNDER;
         }
 
-        boolean isSnowyBiome = SNOWY_BIOMES.contains(biomeName);
-        if (isSnowyBiome && !checkSnow) {
-            return false;
+        if (world.hasStorm()) {
+            if (isSnowyBiome(biome) && config.isSnowEnabled()) {
+                return WeatherType.SNOW;
+            }
+            if (!isSnowyBiome(biome) && config.isRainEnabled()) {
+                return WeatherType.RAIN;
+            }
         }
 
-        int blockX = location.getBlockX();
-        int blockZ = location.getBlockZ();
-        int highestY = world.getHighestBlockYAt(blockX, blockZ);
+        return WeatherType.NONE;
+    }
 
-        return location.getY() >= highestY;
+    private static boolean isUnderOpenSky(Player player) {
+        Location loc = player.getLocation();
+        int highestY = player.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ());
+        return loc.getY() >= highestY;
     }
 
     public static boolean isSnowyBiome(String biomeName) {
