@@ -3,7 +3,7 @@ version: '${project.version}'
 main: com.black.minecraft.b0rain.B0rain
 api-version: '1.18'
 authors: [ IkdanYT ]
-website: https://github.com/IkdanYT/WeatherFX
+website: https://github.com/IkdanYT/rainB0
 description: Realistic weather effects - slowness in rain, elytra restrictions, ambient sounds and more!
 
 commands:

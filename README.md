@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://img.shields.io/github/v/release/IkdanYT/WeatherFX?style=for-the-badge&color=blue" alt="Release">
-  <img src="https://img.shields.io/github/downloads/IkdanYT/WeatherFX/total?style=for-the-badge&color=green" alt="Downloads">
+  <img src="https://img.shields.io/github/v/release/IkdanYT/rainB0?style=for-the-badge&color=blue" alt="Release">
+  <img src="https://img.shields.io/github/downloads/IkdanYT/rainB0/total?style=for-the-badge&color=green" alt="Downloads">
   <img src="https://img.shields.io/badge/Minecraft-1.18--1.21-orange?style=for-the-badge" alt="Minecraft">
   <img src="https://img.shields.io/badge/Java-17+-red?style=for-the-badge" alt="Java">
 </p>
@@ -64,7 +64,7 @@
 
 ### Steps | Шаги
 
-1. Download the latest release from [Releases](https://github.com/IkdanYT/WeatherFX/releases)
+1. Download the latest release from [Releases](https://github.com/IkdanYT/rainB0/releases)
 2. Place `WeatherFX-X.X.jar` in your server's `plugins` folder
 3. Restart the server
 4. Configure in `plugins/WeatherFX/config.yml`
@@ -275,8 +275,8 @@ effects:
 ## 🔗 Links | Ссылки
 
 ### WeatherFX (This Fork)
-- 📦 **Download:** [GitHub Releases](https://github.com/IkdanYT/WeatherFX/releases)
-- 🐛 **Issues:** [GitHub Issues](https://github.com/IkdanYT/WeatherFX/issues)
+- 📦 **Download:** [GitHub Releases](https://github.com/IkdanYT/rainB0/releases)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/IkdanYT/rainB0/issues)
 - 👤 **Author:** [IkdanYT](https://github.com/IkdanYT)
 
 ### Original RainB0
