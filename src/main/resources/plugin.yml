@@ -1,5 +1,5 @@
 name: RainB0
-version: '1.0'
+version: '${project.version}'
 main: com.black.minecraft.b0rain.B0rain
 api-version: '1.18'
 authors: [ b0b0b0 ]
