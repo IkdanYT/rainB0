@@ -64,7 +64,7 @@
 
 ### Steps | Шаги
 
-1. Download the latest release from [Releases](https://github.com/IkdanYT/rainB0/releases)
+1. Download the latest release from [Black-Minecraft](https://black-minecraft.com/resources/weatherfx.10057/) or [Github Releases](https://github.com/IkdanYT/rainB0/releases)
 2. Place `WeatherFX-X.X.jar` in your server's `plugins` folder
 3. Restart the server
 4. Configure in `plugins/WeatherFX/config.yml`
@@ -275,7 +275,8 @@ effects:
 ## 🔗 Links | Ссылки
 
 ### WeatherFX (This Fork)
-- 📦 **Download:** [GitHub Releases](https://github.com/IkdanYT/rainB0/releases)
+- 📦 **Download:** [Black-Minecraft](https://black-minecraft.com/resources/weatherfx.10057/)
+- 📦 **Download from Github:** [GitHub Releases](https://github.com/IkdanYT/rainB0/releases)
 - 🐛 **Issues:** [GitHub Issues](https://github.com/IkdanYT/rainB0/issues)
 - 👤 **Author:** [IkdanYT](https://github.com/IkdanYT)
 
