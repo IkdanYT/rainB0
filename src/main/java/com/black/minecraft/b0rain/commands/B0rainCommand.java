@@ -60,6 +60,7 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
         try {
             configManager.loadConfig();
             languageManager.loadLanguage();
+            plugin.getSoundManager().stop();
             plugin.getRainEffectManager().stop();
             plugin.getRainEffectManager().start();
             sender.sendMessage(languageManager.getMessage("reload-success"));
@@ -78,8 +79,6 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
 
         int affectedCount = plugin.getRainEffectManager().getAffectedCount();
         int onlineCount = Bukkit.getOnlinePlayers().size();
-        List<String> worlds = configManager.getEnabledWorlds();
-        String worldsStr = worlds.isEmpty() ? "all" : String.join(", ", worlds);
 
         sender.sendMessage(languageManager.getMessage("status-header"));
         sender.sendMessage(languageManager.getMessage("status-enabled")
@@ -88,7 +87,7 @@ public class B0rainCommand implements CommandExecutor, TabCompleter {
                 .replace("%affected%", String.valueOf(affectedCount))
                 .replace("%online%", String.valueOf(onlineCount)));
         sender.sendMessage(languageManager.getMessage("status-worlds")
-                .replace("%worlds%", worldsStr));
+                .replace("%worlds%", "configured"));
         return true;
     }
 

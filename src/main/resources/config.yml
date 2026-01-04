@@ -1,23 +1,139 @@
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║                      RainB0 Configuration                     ║
+# ║         Realistic weather effects for Minecraft               ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+# ─────────────────────────────────────────────────────────────────
+# GENERAL SETTINGS | ОСНОВНЫЕ НАСТРОЙКИ
+# ─────────────────────────────────────────────────────────────────
+
+# Language: en, ru
+# Язык: en, ru
 lang: en
+
+# Check for updates on startup
+# Проверять обновления при запуске
 check-update: true
+
+# How often to check players (in ticks, 20 ticks = 1 second)
+# Как часто проверять игроков (в тиках, 20 тиков = 1 секунда)
 check-interval-ticks: 40
 
+# ─────────────────────────────────────────────────────────────────
+# ELYTRA SETTINGS | НАСТРОЙКИ ЭЛИТР
+# ─────────────────────────────────────────────────────────────────
+
+elytra:
+  # Enable elytra restrictions in bad weather
+  # Включить ограничения элитр в плохую погоду
+  enabled: true
+
+  # Mode: "disable" = stop gliding completely, "slow" = reduce flight speed
+  # Режим: "disable" = полностью остановить полёт, "slow" = замедлить полёт
+  mode: disable
+
+  # Speed multiplier for "slow" mode (0.3 = 30% of normal speed)
+  # Множитель скорости для режима "slow" (0.3 = 30% от обычной скорости)
+  slow-multiplier: 0.3
+
+  # Play sound when elytra flight is blocked
+  # Воспроизводить звук при блокировке полёта
+  play-sound: true
+
+  # Sound to play (see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
+  sound: ITEM_ELYTRA_FLYING
+
+# ─────────────────────────────────────────────────────────────────
+# NOTIFICATIONS | УВЕДОМЛЕНИЯ
+# ─────────────────────────────────────────────────────────────────
+
+notifications:
+  # Notify player when weather effect is applied
+  # Уведомлять игрока когда применяется эффект погоды
+  on-effect-start: true
+
+  # Notify player when weather effect is removed
+  # Уведомлять игрока когда эффект погоды снимается
+  on-effect-end: false
+
+  # Notify player when elytra flight is blocked
+  # Уведомлять игрока когда полёт на элитрах заблокирован
+  on-elytra-block: true
+
+  # Cooldown between notifications in seconds (prevents spam)
+  # Задержка между уведомлениями в секундах (предотвращает спам)
+  cooldown-seconds: 30
+
+# ─────────────────────────────────────────────────────────────────
+# SOUNDS | ЗВУКИ
+# ─────────────────────────────────────────────────────────────────
+
+sounds:
+  # Enable ambient sounds for players in rain
+  # Включить фоновые звуки для игроков под дождём
+  enabled: true
+
+  ambient:
+    enabled: true
+    # Sound to play (WEATHER_RAIN, WEATHER_RAIN_ABOVE, etc.)
+    sound: WEATHER_RAIN
+    # Volume (0.0 - 1.0)
+    volume: 0.5
+    # Pitch (0.5 - 2.0)
+    pitch: 1.0
+    # How often to play sound (in ticks)
+    interval-ticks: 100
+
+# ─────────────────────────────────────────────────────────────────
+# CONDITIONS | УСЛОВИЯ ПРИМЕНЕНИЯ
+# ─────────────────────────────────────────────────────────────────
+
 conditions:
+  # Ignore players in vehicles (boats, minecarts, horses, etc.)
+  # Игнорировать игроков в транспорте (лодки, вагонетки, лошади и т.д.)
   ignore-in-vehicle: true
+
+  # Ignore players using creative flight (not elytra)
+  # Игнорировать игроков в творческом полёте (не элитры)
   ignore-flying: true
+
+  # Ignore players who are in water
+  # Игнорировать игроков находящихся в воде
   ignore-in-water: true
+
+  # Gamemodes to ignore (players in these modes won't be affected)
+  # Игнорируемые режимы игры (игроки в этих режимах не будут затронуты)
+  # Available | Доступные: SURVIVAL, CREATIVE, ADVENTURE, SPECTATOR
   ignored-gamemodes:
     - CREATIVE
     - SPECTATOR
 
+# ─────────────────────────────────────────────────────────────────
+# WORLDS | МИРЫ
+# ─────────────────────────────────────────────────────────────────
+
 worlds:
+  # Mode: "whitelist" = only listed worlds, "blacklist" = all except listed
+  # Режим: "whitelist" = только указанные миры, "blacklist" = все кроме указанных
   mode: blacklist
+
+  # List of worlds
+  # Список миров
   list:
     - "world_nether"
     - "world_the_end"
 
+# ─────────────────────────────────────────────────────────────────
+# BIOMES | БИОМЫ
+# ─────────────────────────────────────────────────────────────────
+
 biomes:
+  # Mode: "whitelist" = only listed biomes, "blacklist" = all except listed
+  # Режим: "whitelist" = только указанные биомы, "blacklist" = все кроме указанных
   mode: blacklist
+
+  # Full biome list: https://minecraft.wiki/w/Biome#Biome_IDs
+  # Полный список биомов: https://minecraft.wiki/w/Biome#Biome_IDs
   list:
     - "minecraft:desert"
     - "minecraft:desert_lakes"
@@ -28,21 +144,51 @@ biomes:
     - "minecraft:wooded_badlands"
     - "minecraft:eroded_badlands"
 
+# ─────────────────────────────────────────────────────────────────
+# WEATHER EFFECTS | ЭФФЕКТЫ ПОГОДЫ
+# ─────────────────────────────────────────────────────────────────
+# Each weather type can have MULTIPLE effects!
+# Каждый тип погоды может иметь НЕСКОЛЬКО эффектов!
+#
+# Effect types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/potion/PotionEffectType.html
+# Типы эффектов: SLOW, SLOW_DIGGING, BLINDNESS, HUNGER, WEAKNESS, POISON, DARKNESS, etc.
+
 effects:
+  # ── RAIN | ДОЖДЬ ──
   rain:
     enabled: true
-    type: SLOW
-    level: 0
-    duration-ticks: 80
+    effects:
+      - type: SLOW
+        level: 0          # 0 = Slowness I, 1 = Slowness II, etc.
+        duration-ticks: 80
+      # Example: Add mining fatigue during rain
+      # Пример: Добавить усталость копания во время дождя
+      # - type: SLOW_DIGGING
+      #   level: 0
+      #   duration-ticks: 80
 
+  # ── THUNDER | ГРОЗА ──
   thunder:
     enabled: true
-    type: SLOW
-    level: 1
-    duration-ticks: 80
+    effects:
+      - type: SLOW
+        level: 1          # Stronger slowness during thunder
+        duration-ticks: 80
+      # Example: Add darkness during thunder
+      # Пример: Добавить темноту во время грозы
+      # - type: DARKNESS
+      #   level: 0
+      #   duration-ticks: 60
 
+  # ── SNOW | СНЕГ ──
   snow:
     enabled: false
-    type: SLOW
-    level: 0
-    duration-ticks: 60
+    effects:
+      - type: SLOW
+        level: 0
+        duration-ticks: 60
+      # Example: Add hunger in cold weather
+      # Пример: Добавить голод в холодную погоду
+      # - type: HUNGER
+      #   level: 0
+      #   duration-ticks: 100

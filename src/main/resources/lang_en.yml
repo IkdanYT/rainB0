@@ -1,27 +1,41 @@
 messages:
+  # ── Command messages ──
   reload-success: "§aConfiguration reloaded successfully!"
   reload-error: "§cError reloading configuration!"
   no-permission: "§cYou don't have permission to use this command!"
   player-only: "§cThis command can only be used by players!"
   player-not-found: "§cPlayer %player% not found!"
 
+  # ── Status command ──
   status-header: "§6§l=== RainB0 Status ==="
   status-enabled: "§7Status: %status%"
   status-players: "§7Players affected: §f%affected%§7/§f%online%"
   status-worlds: "§7Enabled worlds: §f%worlds%"
 
+  # ── Toggle command ──
   toggle-enabled: "§aRain effect enabled for you!"
   toggle-disabled: "§cRain effect disabled for you!"
   toggle-player-enabled: "§aRain effect enabled for %player%!"
   toggle-player-disabled: "§cRain effect disabled for %player%!"
 
+  # ── Info command ──
   info-header: "§6§l=== RainB0 Info ==="
   info-version: "§7Version: §f%version%"
   info-author: "§7Author: §f%author%"
   info-website: "§7Website: §f%website%"
 
+  # ── Help command ──
   help-header: "§6§l=== RainB0 Commands ==="
   help-reload: "Reload configuration"
   help-status: "View plugin status"
   help-toggle: "Toggle rain effect"
   help-info: "Plugin information"
+
+  # ── Weather effect notifications ──
+  effect-start-rain: "§7§oYou feel the weight of the rain..."
+  effect-start-thunder: "§8§oThe storm is raging around you!"
+  effect-start-snow: "§f§oThe cold snow slows you down..."
+  effect-end: "§a§oThe weather has cleared up."
+
+  # ── Elytra notifications ──
+  elytra-blocked: "§c§oYou can't fly in this weather!"

@@ -1,27 +1,41 @@
 messages:
+  # ── Сообщения команд ──
   reload-success: "§aКонфигурация успешно перезагружена!"
   reload-error: "§cОшибка при перезагрузке конфигурации!"
   no-permission: "§cУ вас нет прав для использования этой команды!"
   player-only: "§cЭта команда доступна только игрокам!"
   player-not-found: "§cИгрок %player% не найден!"
 
+  # ── Команда status ──
   status-header: "§6§l=== RainB0 Статус ==="
   status-enabled: "§7Статус: %status%"
   status-players: "§7Игроков под эффектом: §f%affected%§7/§f%online%"
   status-worlds: "§7Активные миры: §f%worlds%"
 
+  # ── Команда toggle ──
   toggle-enabled: "§aЭффект дождя включён для вас!"
   toggle-disabled: "§cЭффект дождя отключён для вас!"
   toggle-player-enabled: "§aЭффект дождя включён для %player%!"
   toggle-player-disabled: "§cЭффект дождя отключён для %player%!"
 
+  # ── Команда info ──
   info-header: "§6§l=== RainB0 Инфо ==="
   info-version: "§7Версия: §f%version%"
   info-author: "§7Автор: §f%author%"
   info-website: "§7Сайт: §f%website%"
 
+  # ── Команда help ──
   help-header: "§6§l=== RainB0 Команды ==="
   help-reload: "Перезагрузить конфигурацию"
   help-status: "Статус плагина"
   help-toggle: "Переключить эффект дождя"
   help-info: "Информация о плагине"
+
+  # ── Уведомления об эффектах погоды ──
+  effect-start-rain: "§7§oВы чувствуете тяжесть дождя..."
+  effect-start-thunder: "§8§oГроза бушует вокруг вас!"
+  effect-start-snow: "§f§oХолодный снег замедляет вас..."
+  effect-end: "§a§oПогода прояснилась."
+
+  # ── Уведомления элитр ──
+  elytra-blocked: "§c§oВы не можете летать в такую погоду!"

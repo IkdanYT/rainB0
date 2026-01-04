@@ -4,18 +4,23 @@ main: com.black.minecraft.b0rain.B0rain
 api-version: '1.18'
 authors: [ b0b0b0 ]
 website: https://black-minecraft.com/
+description: Realistic weather effects - slowness in rain, elytra restrictions, and more!
 
 commands:
   rainb0:
     description: Main command for RainB0 plugin
     usage: /<command> <reload|status|toggle|info>
+    aliases: [rb0, rain]
 
 permissions:
   rainb0.reload:
     description: Allows reloading RainB0 configuration
     default: op
   rainb0.bypass:
-    description: Bypass rain slowness effect
+    description: Bypass all rain slowness effects
+    default: false
+  rainb0.elytra.bypass:
+    description: Bypass elytra flight restrictions in rain
     default: false
   rainb0.status:
     description: View plugin status

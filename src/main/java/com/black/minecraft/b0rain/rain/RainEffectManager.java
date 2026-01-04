@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -20,15 +21,22 @@ import java.util.UUID;
 public class RainEffectManager implements Listener {
     private final B0rain plugin;
     private final ConfigManager configManager;
+    private final NotificationManager notificationManager;
+    private final SoundManager soundManager;
     private BukkitRunnable task;
     private final Set<UUID> disabledPlayers;
-    private final Map<UUID, PotionEffectType> activeEffects;
+    private final Map<UUID, Set<PotionEffectType>> activeEffects;
+    private final Map<UUID, WeatherType> playerWeatherState;
 
-    public RainEffectManager(B0rain plugin, ConfigManager configManager) {
+    public RainEffectManager(B0rain plugin, ConfigManager configManager,
+                             NotificationManager notificationManager, SoundManager soundManager) {
         this.plugin = plugin;
         this.configManager = configManager;
+        this.notificationManager = notificationManager;
+        this.soundManager = soundManager;
         this.disabledPlayers = new HashSet<>();
         this.activeEffects = new HashMap<>();
+        this.playerWeatherState = new HashMap<>();
     }
 
     public void start() {
@@ -37,6 +45,7 @@ public class RainEffectManager implements Listener {
         }
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
+        soundManager.start();
 
         task = new BukkitRunnable() {
             @Override
@@ -54,42 +63,65 @@ public class RainEffectManager implements Listener {
         UUID playerId = player.getUniqueId();
 
         if (player.hasPermission("rainb0.bypass") || disabledPlayers.contains(playerId)) {
-            removeEffect(player);
+            removeEffects(player);
             return;
         }
 
         if (!RainChecker.shouldApplyEffect(player, configManager)) {
-            removeEffect(player);
+            removeEffects(player);
             return;
         }
 
         WeatherType weather = RainChecker.getWeatherType(player, configManager);
-        PotionEffect effect = getEffectForWeather(weather);
+        List<PotionEffect> effects = getEffectsForWeather(weather);
 
-        if (effect == null) {
-            removeEffect(player);
+        if (effects.isEmpty()) {
+            removeEffects(player);
             return;
         }
 
-        player.addPotionEffect(effect);
-        activeEffects.put(playerId, effect.getType());
+        WeatherType previousWeather = playerWeatherState.get(playerId);
+        boolean isNewEffect = previousWeather != weather;
+
+        for (PotionEffect effect : effects) {
+            player.addPotionEffect(effect);
+            activeEffects.computeIfAbsent(playerId, k -> new HashSet<>())
+                    .add(effect.getType());
+        }
+
+        if (isNewEffect && weather != WeatherType.NONE) {
+            notificationManager.notifyEffectStart(player, weather);
+            playerWeatherState.put(playerId, weather);
+        }
+
+        soundManager.addPlayerAmbient(playerId);
     }
 
-    private PotionEffect getEffectForWeather(WeatherType weather) {
+    private List<PotionEffect> getEffectsForWeather(WeatherType weather) {
         return switch (weather) {
-            case RAIN -> configManager.getRainEffect();
-            case THUNDER -> configManager.getThunderEffect();
-            case SNOW -> configManager.getSnowEffect();
-            default -> null;
+            case RAIN -> configManager.getRainEffects();
+            case THUNDER -> configManager.getThunderEffects();
+            case SNOW -> configManager.getSnowEffects();
+            default -> List.of();
         };
     }
 
-    private void removeEffect(Player player) {
+    private void removeEffects(Player player) {
         UUID playerId = player.getUniqueId();
-        PotionEffectType type = activeEffects.remove(playerId);
-        if (type != null) {
-            player.removePotionEffect(type);
+        Set<PotionEffectType> types = activeEffects.remove(playerId);
+
+        if (types != null && !types.isEmpty()) {
+            for (PotionEffectType type : types) {
+                player.removePotionEffect(type);
+            }
+
+            WeatherType previous = playerWeatherState.remove(playerId);
+            if (previous != null && previous != WeatherType.NONE) {
+                notificationManager.notifyEffectEnd(player);
+            }
         }
+
+        soundManager.removePlayerAmbient(playerId);
     }
 
     public void stop() {
@@ -98,13 +130,16 @@ public class RainEffectManager implements Listener {
             task = null;
         }
 
+        soundManager.stop();
+
         for (UUID playerId : new HashSet<>(activeEffects.keySet())) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null) {
-                removeEffect(player);
+                removeEffects(player);
             }
         }
         activeEffects.clear();
+        playerWeatherState.clear();
     }
 
     @EventHandler
@@ -112,6 +147,9 @@ public class RainEffectManager implements Listener {
         UUID playerId = event.getPlayer().getUniqueId();
         activeEffects.remove(playerId);
         disabledPlayers.remove(playerId);
+        playerWeatherState.remove(playerId);
+        soundManager.removePlayerAmbient(playerId);
+        notificationManager.clearPlayer(playerId);
     }
 
     public boolean togglePlayer(UUID playerId) {
@@ -122,7 +160,7 @@ public class RainEffectManager implements Listener {
             disabledPlayers.add(playerId);
             Player player = Bukkit.getPlayer(playerId);
             if (player != null) {
-                removeEffect(player);
+                removeEffects(player);
             }
             return false;
         }
