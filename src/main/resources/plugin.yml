@@ -8,9 +8,21 @@ website: https://black-minecraft.com/
 commands:
   rainb0:
     description: Main command for RainB0 plugin
-    usage: /<command> reload
+    usage: /<command> <reload|status|toggle|info>
 
 permissions:
   rainb0.reload:
     description: Allows reloading RainB0 configuration
+    default: op
+  rainb0.bypass:
+    description: Bypass rain slowness effect
+    default: false
+  rainb0.status:
+    description: View plugin status
+    default: op
+  rainb0.toggle:
+    description: Toggle rain effect for yourself
+    default: true
+  rainb0.toggle.others:
+    description: Toggle rain effect for other players
     default: op

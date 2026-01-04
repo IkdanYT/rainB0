@@ -1,4 +1,27 @@
 messages:
-  reload-success: "Configuration reloaded successfully!"
-  reload-error: "Error reloading configuration!"
-  no-permission: "You don't have permission to use this command!"
+  reload-success: "§aConfiguration reloaded successfully!"
+  reload-error: "§cError reloading configuration!"
+  no-permission: "§cYou don't have permission to use this command!"
+  player-only: "§cThis command can only be used by players!"
+  player-not-found: "§cPlayer %player% not found!"
+
+  status-header: "§6§l=== RainB0 Status ==="
+  status-enabled: "§7Status: %status%"
+  status-players: "§7Players affected: §f%affected%§7/§f%online%"
+  status-worlds: "§7Enabled worlds: §f%worlds%"
+
+  toggle-enabled: "§aRain effect enabled for you!"
+  toggle-disabled: "§cRain effect disabled for you!"
+  toggle-player-enabled: "§aRain effect enabled for %player%!"
+  toggle-player-disabled: "§cRain effect disabled for %player%!"
+
+  info-header: "§6§l=== RainB0 Info ==="
+  info-version: "§7Version: §f%version%"
+  info-author: "§7Author: §f%author%"
+  info-website: "§7Website: §f%website%"
+
+  help-header: "§6§l=== RainB0 Commands ==="
+  help-reload: "Reload configuration"
+  help-status: "View plugin status"
+  help-toggle: "Toggle rain effect"
+  help-info: "Plugin information"

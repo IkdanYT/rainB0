@@ -12,84 +12,67 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class LanguageManager {
+    private static final String[] SUPPORTED_LANGUAGES = {"ru", "en"};
+    
     private final B0rain plugin;
     private final ConfigManager configManager;
+    private final File langFolder;
     private FileConfiguration languageConfig;
     private String currentLanguage;
 
     public LanguageManager(B0rain plugin, ConfigManager configManager) {
         this.plugin = plugin;
         this.configManager = configManager;
+        this.langFolder = new File(plugin.getDataFolder(), "lang");
         initializeLanguageFiles();
         loadLanguage();
     }
 
     private void initializeLanguageFiles() {
-        File langFolder = new File(plugin.getDataFolder(), "lang");
         if (!langFolder.exists()) {
             langFolder.mkdirs();
         }
+        for (String lang : SUPPORTED_LANGUAGES) {
+            copyResourceIfMissing("lang_" + lang + ".yml");
+        }
+    }
 
-        String[] languages = {"ru", "en"};
-        for (String lang : languages) {
-            String langFile = "lang_" + lang + ".yml";
-            File langFileObj = new File(langFolder, langFile);
-            
-            if (!langFileObj.exists()) {
-                try (InputStream inputStream = plugin.getResource(langFile)) {
-                    if (inputStream != null) {
-                        try (FileOutputStream outputStream = new FileOutputStream(langFileObj)) {
-                            byte[] buffer = new byte[1024];
-                            int length;
-                            while ((length = inputStream.read(buffer)) > 0) {
-                                outputStream.write(buffer, 0, length);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    plugin.getLogger().warning("Failed to copy language file: " + langFile);
+    private void copyResourceIfMissing(String fileName) {
+        File targetFile = new File(langFolder, fileName);
+        if (targetFile.exists()) {
+            return;
+        }
+        try (InputStream in = plugin.getResource(fileName)) {
+            if (in == null) return;
+            try (FileOutputStream out = new FileOutputStream(targetFile)) {
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
                 }
             }
+        } catch (Exception e) {
+            plugin.getLogger().warning("Failed to copy: " + fileName);
         }
     }
 
     public void loadLanguage() {
-        String langFromConfig = configManager.getLanguage();
-        String normalizedLang = langFromConfig.toLowerCase(Locale.ROOT);
-        
-        if (!normalizedLang.equals("ru") && !normalizedLang.equals("en")) {
-            normalizedLang = "en";
-        }
-        
-        this.currentLanguage = normalizedLang;
-        
-        String langFile = "lang_" + currentLanguage + ".yml";
-        File langFolder = new File(plugin.getDataFolder(), "lang");
-        File langFileObj = new File(langFolder, langFile);
+        String lang = configManager.getLanguage().toLowerCase(Locale.ROOT);
+        this.currentLanguage = (lang.equals("ru") || lang.equals("en")) ? lang : "en";
 
-        if (!langFileObj.exists()) {
-            try (InputStream inputStream = plugin.getResource(langFile)) {
-                if (inputStream != null) {
-                    try (FileOutputStream outputStream = new FileOutputStream(langFileObj)) {
-                        byte[] buffer = new byte[1024];
-                        int length;
-                        while ((length = inputStream.read(buffer)) > 0) {
-                            outputStream.write(buffer, 0, length);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                plugin.getLogger().warning("Failed to copy language file: " + langFile);
+        String fileName = "lang_" + currentLanguage + ".yml";
+        copyResourceIfMissing(fileName);
+
+        File langFile = new File(langFolder, fileName);
+        languageConfig = YamlConfiguration.loadConfiguration(langFile);
+
+        try (InputStream defaultStream = plugin.getResource(fileName)) {
+            if (defaultStream != null) {
+                YamlConfiguration defaults = YamlConfiguration.loadConfiguration(
+                        new InputStreamReader(defaultStream, StandardCharsets.UTF_8));
+                languageConfig.setDefaults(defaults);
             }
-        }
-
-        languageConfig = YamlConfiguration.loadConfiguration(langFileObj);
-        InputStream defaultStream = plugin.getResource(langFile);
-        if (defaultStream != null) {
-            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(
-                    new InputStreamReader(defaultStream, StandardCharsets.UTF_8));
-            languageConfig.setDefaults(defaultConfig);
-        }
+        } catch (Exception ignored) {}
     }
 
     public String getMessage(String key) {

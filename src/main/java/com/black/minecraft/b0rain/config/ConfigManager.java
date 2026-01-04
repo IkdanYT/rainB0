@@ -21,15 +21,18 @@ public class ConfigManager {
     }
 
     public int getCheckIntervalTicks() {
-        return config.getInt("check-interval-ticks", 40);
+        int value = config.getInt("check-interval-ticks", 40);
+        return Math.max(1, value);
     }
 
     public int getSlownessLevel() {
-        return config.getInt("slowness-level", 0);
+        int value = config.getInt("slowness-level", 0);
+        return Math.max(0, Math.min(255, value));
     }
 
     public int getSlownessDurationTicks() {
-        return config.getInt("slowness-duration-ticks", 80);
+        int value = config.getInt("slowness-duration-ticks", 80);
+        return Math.max(1, value);
     }
 
     public boolean isCheckThunder() {
@@ -59,5 +62,9 @@ public class ConfigManager {
 
     public boolean isCheckUpdate() {
         return config.getBoolean("check-update", true);
+    }
+
+    public B0rain getPlugin() {
+        return plugin;
     }
 }

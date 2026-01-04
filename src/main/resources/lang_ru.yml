@@ -1,4 +1,27 @@
 messages:
-  reload-success: "Конфигурация успешно перезагружена!"
-  reload-error: "Ошибка при перезагрузке конфигурации!"
-  no-permission: "У вас нет прав для использования этой команды!"
+  reload-success: "§aКонфигурация успешно перезагружена!"
+  reload-error: "§cОшибка при перезагрузке конфигурации!"
+  no-permission: "§cУ вас нет прав для использования этой команды!"
+  player-only: "§cЭта команда доступна только игрокам!"
+  player-not-found: "§cИгрок %player% не найден!"
+
+  status-header: "§6§l=== RainB0 Статус ==="
+  status-enabled: "§7Статус: %status%"
+  status-players: "§7Игроков под эффектом: §f%affected%§7/§f%online%"
+  status-worlds: "§7Активные миры: §f%worlds%"
+
+  toggle-enabled: "§aЭффект дождя включён для вас!"
+  toggle-disabled: "§cЭффект дождя отключён для вас!"
+  toggle-player-enabled: "§aЭффект дождя включён для %player%!"
+  toggle-player-disabled: "§cЭффект дождя отключён для %player%!"
+
+  info-header: "§6§l=== RainB0 Инфо ==="
+  info-version: "§7Версия: §f%version%"
+  info-author: "§7Автор: §f%author%"
+  info-website: "§7Сайт: §f%website%"
+
+  help-header: "§6§l=== RainB0 Команды ==="
+  help-reload: "Перезагрузить конфигурацию"
+  help-status: "Статус плагина"
+  help-toggle: "Переключить эффект дождя"
+  help-info: "Информация о плагине"

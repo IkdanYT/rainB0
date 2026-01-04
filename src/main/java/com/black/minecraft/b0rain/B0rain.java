@@ -21,7 +21,9 @@ public final class B0rain extends JavaPlugin {
         languageManager = new LanguageManager(this, configManager);
         rainEffectManager = new RainEffectManager(this, configManager);
 
-        getCommand("rainb0").setExecutor(new B0rainCommand(this, configManager, languageManager));
+        B0rainCommand commandHandler = new B0rainCommand(this, configManager, languageManager);
+        getCommand("rainb0").setExecutor(commandHandler);
+        getCommand("rainb0").setTabCompleter(commandHandler);
 
         rainEffectManager.start();
         

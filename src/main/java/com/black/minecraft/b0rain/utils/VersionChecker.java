@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,50 +14,48 @@ public class VersionChecker {
     private static final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     public static void checkVersion(B0rain plugin, String currentVersion) {
-        try {
-            String latestVersion = fetchLatestVersion();
-
-            if (latestVersion == null) {
-                logError("Failed to fetch the latest version. Skipping version check.");
-                return;
-            }
-
-            if (!currentVersion.equalsIgnoreCase(latestVersion)) {
-                Bukkit.getScheduler().runTask(plugin, () -> {
-                    console.sendMessage(B0rain.PREFIX + " ");
-                    logWarning("You are using an outdated version!");
-                    logWarning("Current version: \u001B[90m" + currentVersion +
-                            "\u001B[33m, latest version: \u001B[32m" + latestVersion + "\u001B[0m.");
-                    logWarning("Please update the plugin. Choose one of the following links to download:");
-
-                    console.sendMessage(B0rain.PREFIX + "\u001B[36m1. Black-Minecraft: \u001B[0mhttps://bm.wtf/resources/10054/");
-                    console.sendMessage(B0rain.PREFIX + " ");
-                });
-            } else {
-                Bukkit.getScheduler().runTask(plugin, () -> {
-                    logInfo("You are using the latest version of the plugin! Version: \u001B[32m" + currentVersion + "\u001B[0m.");
-                });
-            }
-        } catch (Exception e) {
-            logError("Error during version check: " + e.getMessage());
-            e.printStackTrace();
+        String latestVersion = fetchLatestVersion(currentVersion);
+        if (latestVersion == null) {
+            logError("Failed to fetch the latest version.");
+            return;
         }
+
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            if (!currentVersion.equalsIgnoreCase(latestVersion)) {
+                console.sendMessage(B0rain.PREFIX + " ");
+                logWarning("You are using an outdated version!");
+                logWarning("Current: \u001B[90m" + currentVersion + 
+                        "\u001B[33m, Latest: \u001B[32m" + latestVersion + "\u001B[0m");
+                logWarning("Download: \u001B[36mhttps://bm.wtf/resources/10054/\u001B[0m");
+                console.sendMessage(B0rain.PREFIX + " ");
+            } else {
+                logInfo("Running latest version: \u001B[32m" + currentVersion + "\u001B[0m");
+            }
+        });
     }
 
-    private static String fetchLatestVersion() {
+    private static String fetchLatestVersion(String currentVersion) {
+        HttpURLConnection connection = null;
         try {
             URL url = new URL(VERSION_URL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
+            connection.setRequestProperty("User-Agent", "RainB0/" + currentVersion);
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                return in.readLine().trim();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()))) {
+                String line = reader.readLine();
+                return line != null ? line.trim() : null;
             }
-        } catch (IOException e) {
-            logError("Connection error to " + VERSION_URL + ": " + e.getMessage());
+        } catch (Exception e) {
+            logError("Connection error: " + e.getMessage());
             return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
     }
 
